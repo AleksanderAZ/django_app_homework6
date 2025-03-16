@@ -1,0 +1,36 @@
+{% load custom_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Список користувачів</title>
+    </head>
+    <body>
+        <h2> Керування дозволами, {% infousers users %} користувачів </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Кількість наявних дозволів</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td> {{ user.full_name }}</td>
+                        <td> {{ user.email|lower }}</td>
+                        <td> {% with total=user.user_permissions.all.count %}
+                               {{ total }}
+                             {% endwith %} 
+                        </td>
+                        <td>
+                            <a href="{% url 'manage_permissions' user.id %}">Edit permissions</a>
+                        </td>
+                    </tr>    
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </body>
+</html>

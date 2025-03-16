@@ -1,0 +1,20 @@
+{% load custom_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Головна сторінка</title>
+    </head>
+    <body>
+        <h1>Welcome! Now {% now "d-m-Y G:i:s" %} UTC</h1>
+        {% if user.is_authenticated %}
+            <p> Привіт, {{user.email|lower}}</p>
+            {% if user.is_superuser %}
+                <a href="{% url 'user_list' %}"> Управління дозволами </a>
+            {% endif %}
+            <a href="{% url 'logout' %}"> Вихід </a>
+        {% else %}
+            <a href="{% url 'login' %}"> Увійти </a>  
+        {% endif %} 
+    </body>
+
+</html>
